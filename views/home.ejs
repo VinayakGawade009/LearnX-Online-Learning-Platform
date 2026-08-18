@@ -1,0 +1,97 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-5">
+    <!-- Hero Section -->
+    <div class="row align-items-center mb-5 pb-5 border-bottom">
+        <div class="col-lg-6 text-center text-lg-start mb-4 mb-lg-0">
+            <h1 class="display-4 fw-bold text-dark mb-3">Master Your Craft with <span class="text-primary">Codee</span></h1>
+            <p class="lead text-muted mb-4">
+                An interactive learning platform featuring expert masterclasses, handwritten notes, and a community-driven review system. Start building your future today.
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="/listings" class="btn btn-primary btn-lg px-4 me-md-2">Explore Courses</a>
+                <% if(!currUser) { %>
+                    <a href="/signup" class="btn btn-outline-dark btn-lg px-4">Join for Free</a>
+                <% } %>
+            </div>
+        </div>
+        <div class="col-lg-6 d-none d-lg-block">
+            <!-- unsplash image source -->
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Students coding" class="img-fluid rounded-4 shadow-lg">
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row text-center mb-5 pb-5 border-bottom">
+        <div class="col-md-4 mb-4 mb-md-0">
+            <div class="card h-100 border-0 shadow-sm py-4">
+                <div class="card-body">
+                    <div class="text-primary mb-3">
+                        <i class="fa-solid fa-laptop-code fa-3x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Video Masterclasses</h5>
+                    <p class="card-text text-muted">Learn directly from industry experts with our seamless, built-in cinematic video player.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4 mb-md-0">
+            <div class="card h-100 border-0 shadow-sm py-4">
+                <div class="card-body">
+                    <div class="text-success mb-3">
+                        <i class="fa-solid fa-book-open-reader fa-3x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Instructor Resources</h5>
+                    <p class="card-text text-muted">Get exclusive access to handwritten notes, presentation slides, and downloadable code assets.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm py-4">
+                <div class="card-body">
+                    <div class="text-warning mb-3">
+                        <i class="fa-solid fa-star fa-3x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Community Driven</h5>
+                    <p class="card-text text-muted">Make informed decisions using our transparent, peer-reviewed rating system.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meet the Developer Section -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow rounded-4 overflow-hidden">
+                <div class="row g-0 align-items-center">
+                    <!-- Developer Image/Avatar -->
+                    <div class="col-md-4 text-center bg-light py-5">
+                        <img src="https://ui-avatars.com/api/?name=Vinayak+Gawade&background=0D6EFD&color=fff&size=180&font-size=0.4" alt="Developer Avatar" class="rounded-circle shadow-sm mb-3">
+                    </div>
+                    <!-- Developer Info -->
+                    <div class="col-md-8 p-4 p-md-5">
+                        <h6 class="text-uppercase text-primary fw-bold mb-1">Created By</h6>
+                        <h3 class="fw-bold mb-1">Vinayak Gawade</h3>
+                        <p class="text-muted fw-semibold mb-3">Full-Stack Developer & Computer Engineering Student</p>
+                        
+                        <p class="text-muted mb-4">
+                            I built Codee to serve as a robust, user-centric Learning Management System. 
+                            Utilizing a modern tech stack featuring Node.js, Express, JavaScript, and MongoDB, 
+                            this platform demonstrates scalable architecture, secure authentication, and seamless database integration. 
+                            When I am not building full-stack applications, you can usually find me participating in national hackathons or sharpening my algorithmic problem-solving skills.
+                        </p>
+                        
+                        <div class="d-flex gap-2">
+                            <a href="https://github.com/VinayakGawade009" target="_blank" class="btn btn-dark">
+                                <i class="fa-brands fa-github me-1"></i> GitHub
+                            </a>
+
+                            <a href="https://www.linkedin.com/in/vinayak-gawade-63296b31a/" target="_blank" class="btn btn-outline-primary">
+                                <i class="fa-brands fa-linkedin me-1"></i> LinkedIn Connect
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
