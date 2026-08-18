@@ -16,6 +16,16 @@ module.exports.isLoggedIn = (req, res, next) => {
     next();
 };
 
+module.exports.isInstructor = (req, res, next) => {
+    // Check if user is logged in AND has the instructor role
+    if (req.user && req.user.role === 'instructor') {
+        next();
+    } else {
+        req.flash("error", "You must be an approved instructor to perform this action!");
+        return res.redirect("/listings");
+    }
+};
+
 module.exports.saveRedirectUrl = (req, res, next) => {
     if(req.session.redirectUrl) {
         res.locals.redirectUrl = req.session.redirectUrl;

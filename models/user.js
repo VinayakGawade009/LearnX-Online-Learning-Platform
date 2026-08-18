@@ -7,9 +7,14 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    role: {
+        type: String,
+        enum: ['student', 'instructor', 'admin'],
+        default: 'student'
+    },
     teacher: {
         type: Schema.Types.ObjectId,
-        ref: "Teacher"  // This links to your Teacher model
+        ref: "Teacher" 
     }
 });
 

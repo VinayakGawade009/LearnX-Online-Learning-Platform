@@ -15,6 +15,11 @@ const listingSchema = new Schema({
         url: String,
         filename: String,
     },
+    // video link (e.g., YouTube URL or Cloudinary Video URL)
+    videoUrl: {
+        type: String,
+        required: true // Or false, if you want to allow text-only courses for now
+    },
     tags: [
         {
             type: String,

@@ -22,15 +22,17 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
+const dbUrl = process.env.MONGO_URI;
+
 main().then(() => {
     console.log("connection successful");
 })
-    .catch((err) => {
-        console.log(err);
-    });
+.catch((err) => {
+    console.log(err);
+});
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/codee');
+    await mongoose.connect(dbUrl);
 }
 
 app.set("view engine", "ejs");
@@ -108,7 +110,7 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    let {statusCode="500", message="Someth/ing Went Wrong!"} = err;
+    let {statusCode=500, message="Someth/ing Went Wrong!"} = err;
     res.status(statusCode).render("error.ejs", { err });
     // res.status(statusCode).send(message);
 });

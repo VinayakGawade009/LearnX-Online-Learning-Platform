@@ -14,6 +14,10 @@
                                 <h5 class="card-title"><b><%= listing.title %></b></h5>
                                 <p class="card-text"><%= listing.description %></p>
 
+                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#videoModal">
+                                    <i class="fa-solid fa-play"></i> Watch Course
+                                </button>
+
                                 <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
                                 <div class="btns">
                                     <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn mx-2">Edit</a>
@@ -72,7 +76,7 @@
                         <h5 class="card-title"> ABOUT THE INSTRUCTOR</h5>
                         <P class="card-text">
                         <div class="row ">
-                            <h5 style="color: blue;text-decoration: underline;"> Dr. Angela Yu</h5> <br>
+                            <h5 style="color: blue;text-decoration: underline;">@<%= listing.owner.username %></h5> <br>
                             <!-- <img src="images/profile.jpg" alt=""
                                 style="border-radius: 50%;border-style: solid;border-color: gray;"> -->
                             <div class="col">
@@ -112,25 +116,36 @@
                 </div>
             </div>
             <div class="col">
-                <div class="card border rounded-top" style="padding: 1rem !important;">
-                    <div class="card-body">
-                        <h5 class="card-title">NOTES</h5>
-                        <p class="card-text">FOR HANDWRITTEN NOTES <br>CLICK ON LINK GIVEN BELOW.</p>
-                        <button class="btn btn-dark">Add Notes</button>
+                <!-- Only show these admin controls to the course owner -->
+                <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
+                    <div class="card border rounded-top border-primary" style="padding: 1rem !important;">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary"><i class="fa-solid fa-lock-open"></i> INSTRUCTOR CONTROLS</h5>
+                            <hr>
+                            <h6 class="card-title mt-3">NOTES</h6>
+                            <p class="card-text">Upload or link handwritten notes for this module.</p>
+                            <button class="btn btn-outline-dark btn-sm">Add Notes</button>
+                            
+                            <h6 class="card-title mt-4">RECORDING</h6>
+                            <p class="card-text">Update the video link for this course module.</p>
+                            <!-- Changed to a link that goes to the Edit page -->
+                            <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-dark btn-sm">Edit Video Link</a>
+                        </div>
                     </div>
-                </div>
-                <br> <br>
-                <div class="card border rounded-bottom" style="padding: 1rem !important;">
-                    <div class="card-body">
-                        <h5 class="card-title">RECORDING</h5>
-                        <p class="card-text">FOR RECORDINGS OF PREVIOUSLY COVERED TOPIC <br> CLICK ON BELOW LINK.</p>
-                        <button class="btn btn-dark">Upload Video</button>
+                <% } else { %>
+                    <!-- What normal students see -->
+                    <div class="card border rounded" style="padding: 1rem !important;">
+                        <div class="card-body">
+                            <h5 class="card-title">COURSE MATERIALS</h5>
+                            <p class="card-text">Instructor notes and resources will appear here once uploaded.</p>
+                            <button class="btn btn-dark" disabled>Download Notes</button>
+                        </div>
                     </div>
-                </div>
+                <% } %>
             </div>
-
         </div>
         <br><br>
+
         <h3> RELATED COURSES</h3><br>
         <!-- <div class="d-flex justify-content-around">
                 <div class="card mx-1" style="background-color: lavender;max-width: 33%;">
@@ -235,26 +250,77 @@
                 <button class="btn btn-outline-dark">Submit</button>
             </form>
             <hr>
+            <% } else { %>
+                <div class="card p-3 my-3 bg-light border-0 rounded text-center">
+                    <p class="mb-2 text-muted">Want to share your feedback about this course?</p>
+                    <div>
+                        <a href="/login" class="btn btn-sm btn-outline-primary px-3 mx-1">
+                            <i class="fa-solid fa-right-to-bracket"></i> Login to Review
+                        </a>
+                        <a href="/signup" class="btn btn-sm btn-primary px-3 mx-1">
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+                <hr>
             <% } %>
 
 
             <p><b>All Reviews</b></p>
     
             <div class="row">
-                <% for(review of listing.reviews) { %>
-                    <div class="card col-5 ms-3 mb-3">
-                        <div class="card-body mb-3">
-                            <h5 class="card-title">@<%= review.author.username %></h5>
-                            <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-                            <p class="card-text"><%= review.comment %></p>
-                        </div>
-                        <% if(currUser && currUser._id.equals(review.author._id)) { %>
-                        <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3">
-                            <button class="btn btn-sm btn-dark">Delete</button>
-                        </form>
-                        <% } %>
+                <% if (listing.reviews.length === 0) { %>
+                    <div class="col-12 ms-3 mb-3 text-muted">
+                        <p><i>No reviews yet. Be the first to add a review for this course!</i></p>
                     </div>
+                <% } else { %>
+                    <% for(review of listing.reviews) { %>
+                        <div class="card col-5 ms-3 mb-3">
+                            <div class="card-body mb-3">
+                                <h5 class="card-title">@<%= review.author.username %></h5>
+                                <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+                                <p class="card-text"><%= review.comment %></p>
+                            </div>
+                            <% if(currUser && currUser._id.equals(review.author._id)) { %>
+                            <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3">
+                                <button class="btn btn-sm btn-dark">Delete</button>
+                            </form>
+                            <% } %>
+                        </div>
+                    <% } %>
                 <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-dark text-white">
+                
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" id="videoModalLabel"><%= listing.title %> - Masterclass</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body p-0">
+                    <% 
+                        let embedUrl = listing.videoUrl;
+                        if (embedUrl && embedUrl.includes("watch?v=")) {
+                            embedUrl = embedUrl.replace("watch?v=", "embed/");
+                        }
+                    %>
+                    
+                    <% if (embedUrl) { %>
+                        <div class="ratio ratio-16x9">
+                            <iframe src="<%= embedUrl %>" title="Course Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    <% } else { %>
+                        <div class="p-5 text-center">
+                            <p>Video content is currently unavailable.</p>
+                        </div>
+                    <% } %>
+                </div>
+                
             </div>
         </div>
     </div>

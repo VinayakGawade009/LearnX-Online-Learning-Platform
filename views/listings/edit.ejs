@@ -20,6 +20,12 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="videoUrl" class="form-label">Course Video URL (YouTube/Vimeo)</label>
+                    <input name="listing[videoUrl]" placeholder="Enter the video link" type="url" class="form-control" required>
+                    <div class="invalid-feedback">Please provide a valid video URL!</div>
+                </div>
+
+                <div class="mb-3">
                     Original Listing Image <br>
                     <img src="<%= originalImageUrl %>" alt="">
                 </div>
